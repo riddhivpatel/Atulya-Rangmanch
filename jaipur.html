@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaipur City | Timeless Royalty</title>
+    
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- 1. GENERAL STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f0a0a; /* Darker warm background */
+            color: #fff;
+            overflow-x: hidden; line-height: 1.6;
+        }
+
+        /* --- 2. NAVIGATION --- */
+        .back-btn {
+            position: fixed; top: 30px; left: 30px; z-index: 1000;
+            text-decoration: none; color: #fff; font-size: 0.8rem;
+            font-weight: 600; letter-spacing: 2px; padding: 12px 25px;
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
+            background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); transition: 0.4s ease;
+        }
+        .back-btn:hover { background: #e67e22; border-color: #e67e22; color: #fff; }
+
+        /* --- 3. CINEMATIC HERO --- */
+        .hero {
+            height: 100vh; width: 100%;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.8)), 
+                        url('https://static.vecteezy.com/system/resources/previews/011/084/232/large_2x/full-picture-of-hawa-mahal-of-rajasthan-photo.jpg') center/cover no-repeat;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        }
+        .sub-title { font-size: 1rem; letter-spacing: 12px; text-transform: uppercase; color: #f4a261; margin-bottom: 10px; opacity: 0; animation: fadeIn 2s forwards 1s; }
+        .giant-title { font-family: 'Playfair Display', serif; font-size: 8vw; letter-spacing: 20px; text-transform: uppercase; opacity: 0; transform: translateY(50px); animation: fadeInUp 1.5s forwards 0.5s; }
+
+        /* --- 4. STORY SECTIONS --- */
+        .section-padding { padding: 120px 10%; position: relative; display: flex; align-items: center; min-height: 90vh; }
+        .reverse { flex-direction: row-reverse; }
+        .content-box { display: flex; align-items: center; gap: 80px; z-index: 2; }
+        .image-container { flex: 1.2; overflow: hidden; border-radius: 5px; box-shadow: 0 40px 100px rgba(0,0,0,0.5); }
+        .image-container img { width: 100%; height: 1000px; object-fit: cover; transition: transform 2s ease; }
+        .image-container:hover img { transform: scale(1.1); }
+        .text-container { flex: 0.8; }
+        .text-container h2 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 20px; line-height: 1.1; color: #f4a261; }
+        .text-container p { color: rgba(255,255,255,0.7); font-size: 1.1rem; margin-bottom: 20px; }
+        
+
+        /* --- 5. GHOST TYPOGRAPHY --- */
+        .ghost-letter { position: absolute; font-family: 'Playfair Display', serif; font-size: 35rem; color: rgba(244, 162, 97, 0.05); font-weight: 900; z-index: 1; pointer-events: none; top: 50%; transform: translateY(-50%); }
+        .left-letter { left: 5%; } .right-letter { right: 5%; }
+
+        /* --- 6. CINEMATIC GALLERY MOODBOARD --- */
+        .gallery-section { padding: 100px 5%; text-align: center; background: #0a0a0a; }
+        .gallery-title { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 50px; letter-spacing: 5px; }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 300px;
+            gap: 15px;
+        }
+        .gallery-item { position: relative; overflow: hidden; border-radius: 8px; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; filter: sepia(30%) brightness(0.8); }
+        .gallery-item:hover img { transform: scale(1.1); filter: sepia(0%) brightness(1); }
+        
+        .w-2 { grid-column: span 2; }
+        .h-2 { grid-row: span 2; }
+
+        /* --- 7. TRAVELER'S INFO SECTION --- */
+        .info-section { padding: 100px 10%; background: #111; }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+        .info-card {
+            background: rgba(255,255,255,0.02);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(244, 162, 97, 0.1);
+            transition: 0.3s;
+        }
+        .info-card:hover { border-color: #f4a261; background: rgba(244, 162, 97, 0.05); }
+        .info-card i { font-size: 2.5rem; color: #f4a261; margin-bottom: 20px; }
+        .info-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 15px; color: #fff; }
+        .info-card p, .info-card li { font-size: 0.95rem; color: rgba(255,255,255,0.7); list-style: none; margin-bottom: 8px; }
+
+        /* --- REVEAL ANIMATIONS --- */
+        .reveal { opacity: 0; transform: translateY(80px); transition: 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67) all; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        footer { padding: 80px; text-align: center; color: rgba(255,255,255,0.2); border-top: 1px solid rgba(255,255,255,0.05); }
+
+    </style>
+</head>
+<body>
+
+    <a href="website_index.html" class="back-btn">← EXPLORE OTHERS</a>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h4 class="sub-title">The Regal Capital</h4>
+        <h1 class="giant-title">Jaipur City</h1>
+    </section>
+
+    <!-- Story 1 -->
+    <section class="section-padding reveal">
+        <div class="ghost-letter left-letter">H</div>
+        <div class="content-box">
+            <div class="image-container">
+                <img src="https://images.pexels.com/photos/16738852/pexels-photo-16738852/free-photo-of-entrance-to-the-city-palace-jaipur-india.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Hawa Mahal Windows">
+            </div>
+            <div class="text-container">
+                <h2>First Planned City of the Indian Subcontinent</h2>
+                <p>Built in 1799 by Maharaja Sawai Pratap Singh, this "Palace of Winds" was designed with 953 small windows called <strong>Jharokhas</strong>.</p>
+                <p>These windows allowed royal women to observe street festivals while remaining unseen from the outside, following the strict Purdah system.
+                    aipur, the capital of Rajasthan, India, was founded in 1727 by Maharaja Sawai Jai Singh II and is renowned as one of the first planned cities in India, designed with a geometric grid layout inspired by Vedic architecture and Western planning principles 
+culture.gov.in
+culture.gov.in
++1
+. Its streets, public squares (chaupars), and sectors (chowkris) reflect a harmonious blend of Hindu, Mughal, and European urban planning concepts, making it a unique example of 18th-century city planning 
+UNESCO
+UNESCO
++1
+.
+The city was inscribed as a UNESCO World Heritage Site because it fulfills criteria (ii), (iv), and (vi), demonstrating an important interchange of human values, a distinctive town plan, and the expression of astronomical and cosmological knowledge of the period 
+jaipurmcheritage.org
+jaipurmcheritage.org
+. Jaipur’s heritage includes its forts, palaces, markets, and artisanal traditions, which have been preserved over centuries, maintaining its cultural and commercial vibrancy 
+jaipurmcheritage.org
+jaipurmcheritage.org
++1
+.
+Today, Jaipur continues to be celebrated for its architectural uniformity, vibrant crafts, and historical significance, earning it global recognition as a World Heritage City and highlighting its outstanding universal value</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cinematic Gallery Moodboard -->
+    <section class="gallery-section reveal">
+        <h2 class="gallery-title">Echoes of Jaipur</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item w-2 h-2"><img src="https://static2.tripoto.com/media/transfer/img/OgData/1511856965_ravi_shekhar_365763_fotor.jpg" alt=""></div>
+            <div class="gallery-item"><img src="https://i.pinimg.com/originals/8b/67/21/8b6721341dd8805dbc11f59e8757ab32.jpg" alt=""></div>
+            <div class="gallery-item h-2"><img src="https://i.pinimg.com/1200x/e6/0f/95/e60f9513d9da3a08bf6a7c2e75f5b3ea.jpg" alt=""></div>
+            <div class="gallery-item"><img src="https://i.pinimg.com/736x/a4/cd/57/a4cd57d92512a7eb5e2df018a646765f.jpg" alt=""></div>
+            <div class="gallery-item w-2"><img src="https://wallpaperaccess.com/full/8548945.jpg" alt=""></div>
+            <div class="gallery-item"><img src="https://i.pinimg.com/1200x/b4/ed/c2/b4edc2cff7cab85ba3f9a3e9a298a52e.jpg" alt=""></div>
+            <div class="gallery-item"><img src="https://i.pinimg.com/1200x/18/d9/27/18d9271e083a9a29e1269731982d8598.jpg" alt=""></div>
+            <div class="gallery-item"><img src="https://i.pinimg.com/736x/6d/1d/b4/6d1db447034df5bef0b484e121241591.jpg" alt=""></div>
+            <div class="gallery-item"><img src="https://i.pinimg.com/1200x/c1/88/28/c18828283f16c9e673e83f7030159a0f.jpg" alt=""></div>
+            <div class="gallery-item"><img src="https://i.pinimg.com/736x/7c/56/4d/7c564d2ca3a4a08b97c292a9e8d9f493.jpg" alt=""></div>
+            <div class="gallery-item"><img src="https://i.pinimg.com/1200x/da/e8/8e/dae88ef0a33f2c47c0a45584a926d7d2.jpg" alt=""></div>
+        </div>
+    </section>
+
+    <!-- Essential Info Section -->
+    <section class="info-section reveal">
+        <div class="info-grid">
+            <!-- UNESCO Info -->
+            <div class="info-card">
+                <i class="fas fa-landmark"></i>
+                <h3>UNESCO Status</h3>
+                <p>Declared a UNESCO World Heritage Site in <strong>2019</strong> as part of the "Jaipur City" inscription.</p>
+                <p>The site is celebrated for its unique blend of Islamic Mughal and Hindu Rajput architecture.</p>
+            </div>
+
+            <!-- Best Time -->
+            <div class="info-card">
+                <i class="fas fa-sun"></i>
+                <h3>Best Time to Visit</h3>
+                <p><strong>Sunrise:</strong> The golden rays of the early sun hit the red and pink sandstone, making it glow magically.</p>
+                <p><strong>Sept to March:</strong> The most pleasant months for exploring Rajasthan.</p>
+            </div>
+
+            <!-- Ticket Fares -->
+            <div class="info-card">
+                <i class="fas fa-ticket-alt"></i>
+                <h3>Entry Details</h3>
+                <ul>
+                    <li>Entry Fee: ₹50 (Indians) / ₹200 (Foreigners)</li>
+                    <li>Hours: 9:00 AM to 4:30 PM</li>
+                    <li>Location: Badi Choupad, Pink City, Jaipur</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Atulya Rangmanch | Hawa Mahal Module | 2026</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

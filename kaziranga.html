@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaziranga | Cinematic Heritage Experience</title>
+    
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- 1. GENERAL STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a; color: #fff;
+            overflow-x: hidden; line-height: 1.6;
+        }
+
+        /* --- 2. NAVIGATION --- */
+        .back-btn {
+            position: fixed; top: 30px; left: 30px; z-index: 1000;
+            text-decoration: none; color: #fff; font-size: 0.8rem;
+            font-weight: 600; letter-spacing: 2px; padding: 12px 25px;
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
+            background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); transition: 0.4s ease;
+        }
+        .back-btn:hover { background: #fff; color: #000; }
+
+        /* --- 3. CINEMATIC HERO --- */
+        .hero {
+            height: 100vh; width: 100%;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.8)), 
+                        url('https://rhinos.org/wp-content/uploads/2024/07/1720542345016.jpeg') center/cover no-repeat;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        }
+        .sub-title { font-size: 1rem; letter-spacing: 12px; text-transform: uppercase; color: #f39c12; margin-bottom: 10px; opacity: 0; animation: fadeIn 2s forwards 1s; }
+        .giant-title { font-family: 'Playfair Display', serif; font-size: 10vw; letter-spacing: 25px; text-transform: uppercase; opacity: 0; transform: translateY(50px); animation: fadeInUp 1.5s forwards 0.5s; }
+
+        /* --- 4. STORY SECTIONS --- */
+        .section-padding { padding: 120px 10%; position: relative; display: flex; align-items: center; min-height: 90vh; }
+        .reverse { flex-direction: row-reverse; }
+        .content-box { display: flex; align-items: center; gap: 80px; z-index: 2; }
+        .image-container { flex: 1.2; overflow: hidden; border-radius: 5px; box-shadow: 0 40px 100px rgba(0,0,0,0.5); }
+        .image-container img { width: 100%; height: 600px; object-fit: cover; transition: transform 2s ease; }
+        .image-container:hover img { transform: scale(1.1); }
+        .text-container { flex: 0.8; }
+        .text-container h2 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 20px; line-height: 1.1; }
+        .text-container p { color: rgba(255,255,255,0.7); font-size: 1.1rem; margin-bottom: 20px; }
+
+        /* --- 5. GHOST TYPOGRAPHY --- */
+        .ghost-letter { position: absolute; font-family: 'Playfair Display', serif; font-size: 35rem; color: rgba(255,255,255,0.03); font-weight: 900; z-index: 1; pointer-events: none; top: 50%; transform: translateY(-50%); }
+        .left-letter { left: 5%; } .right-letter { right: 5%; }
+
+        /* --- 6. CINEMATIC GALLERY MOODBOARD --- */
+        .gallery-section { padding: 100px 5%; text-align: center; }
+        .gallery-title { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 50px; letter-spacing: 5px; }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 300px;
+            gap: 15px;
+        }
+        .gallery-item { position: relative; overflow: hidden; border-radius: 8px; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; filter: grayscale(50%); }
+        .gallery-item:hover img { transform: scale(1.1); filter: grayscale(0%); }
+        
+        /* Making the grid look "Cinematic/Irregular" */
+        .w-2 { grid-column: span 2; }
+        .h-2 { grid-row: span 2; }
+
+        /* --- 7. TRAVELER'S INFO SECTION --- */
+        .info-section { padding: 100px 10%; background: #111; }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+        .info-card {
+            background: rgba(255,255,255,0.03);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+        .info-card:hover { border-color: #f39c12; background: rgba(255,255,255,0.05); }
+        .info-card i { font-size: 2.5rem; color: #f39c12; margin-bottom: 20px; }
+        .info-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 15px; color: #fff; }
+        .info-card p, .info-card li { font-size: 0.95rem; color: rgba(255,255,255,0.7); list-style: none; margin-bottom: 8px; }
+
+        /* --- REVEAL ANIMATIONS --- */
+        .reveal { opacity: 0; transform: translateY(80px); transition: 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67) all; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        footer { padding: 80px; text-align: center; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body>
+
+    <a href="website_index.html" class="back-btn">← EXPLORE OTHERS</a>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h4 class="sub-title">Untamed Wilderness</h4>
+        <h1 class="giant-title">KAZIRANGA</h1>
+    </section>
+
+    <!-- Story 1 -->
+    <section class="section-padding reveal">
+        <div class="ghost-letter left-letter">K</div>
+        <div class="content-box">
+            <div class="image-container">
+                <img src="https://media.istockphoto.com/id/1431484724/photo/indian-rhino-calf-playing-with-mother.jpg?s=612x612&w=0&k=20&c=ePzvwSFETxn3PZuCOdFI56tyweGH4HAOSp5ibpkCpP8=" alt="Rhino">
+            </div>
+            <div class="text-container">
+                <h2>The One-Horned Legend</h2>
+                <p>Nourished by the Brahmaputra, Kaziranga is home to the world’s largest population of Great Indian One-Horned Rhinoceroses.Kaziranga National Park, located in the floodplains of the Brahmaputra River in Assam, covers approximately 430 square kilometers and represents one of the last unmodified natural areas in northeastern India 
+UNESCO
+UNESCO
++1
+. It was established as a reserve forest in 1905, declared a national park in 1974, and inscribed as a UNESCO World Heritage Site in 1985 for its outstanding universal value under natural criteria.Kaziranga is globally recognized for harboring the largest population of the Indian one-horned rhinoceros, currently estimated at over 2,600 individuals 
+Wikipedia
+Wikipedia
++1
+. The park also provides habitat for other threatened species, including tigers, Asian elephants, wild water buffalo, swamp deer, gaur, Sambar deer, hog deer, capped langur, hoolock gibbon, and sloth bear 
+UNESCO
+UNESCO
++1
+. Aquatic species such as the Ganges River dolphin and over 450 species of birds, including migratory species like pelicans and storks, further highlight its ecological importance </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cinematic Gallery Moodboard -->
+    <section class="gallery-section reveal">
+        <h2 class="gallery-title">Visions of the Wild</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item w-2 h-2"><img src="https://www.tigersafariindia.com/wp-content/uploads/2023/11/elephants-playing-in-kaziranga-national-park.jpg" alt=""></div>
+            <div class="gallery-item"><img src="https://www.kaziranga-national-park.com/blog/wp-content/uploads/2021/10/Kaziranga-Jeep-Safari.jpg" alt=""></div>
+            <div class="gallery-item h-2"><img src="https://tse2.mm.bing.net/th/id/OIP.Lmhie_wJ__nSsJ8_J_ISyQHaJC?r=0&pid=ImgDet&w=474&h=578&rs=1&o=7&rm=3" alt=""></div>
+            <div class="gallery-item"><img src="https://www.tigersafariindia.com/wp-content/uploads/2023/11/bengal-tiger-sighting-in-kaziranga-national-park.jpg" alt=""></div>
+            <div class="gallery-item w-2"><img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?q=80&w=800" alt=""></div>
+            <div class="gallery-item"><img src="https://www.tourmyindia.com/blog/wp-content/uploads/2024/03/Kaziranga-National-Park-Bird.jpg" alt=""></div>
+            <div class="gallery-item"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Sambar_Deer_during_Flood_at_Kaziranga_National_Park%2C_North_East_India.jpg/500px-Sambar_Deer_during_Flood_at_Kaziranga_National_Park%2C_North_East_India.jpg" alt=""></div>
+        </div>
+    </section>
+
+    <!-- Essential Info Section -->
+    <section class="info-section reveal">
+        <div class="info-grid">
+            <!-- UNESCO Info -->
+            <div class="info-card">
+                <i class="fas fa-monument"></i>
+                <h3>UNESCO Status</h3>
+                <p>Declared a World Heritage Site in <strong>1985</strong> for its unique natural environment.</p>
+                <p>It was first established as a Reserved Forest in 1905, thanks to the efforts of Mary Curzon.</p>
+            </div>
+
+            <!-- Best Time -->
+            <div class="info-card">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>Best Time to Visit</h3>
+                <p><strong>Nov to April:</strong> The park is open and the weather is pleasant.</p>
+                <p><strong>Note:</strong> The park remains closed from May to October due to monsoon floods.</p>
+            </div>
+
+            <!-- Ticket Fares -->
+            <div class="info-card">
+                <i class="fas fa-ticket-alt"></i>
+                <h3>Entry & Safaris</h3>
+                <ul>
+                    <li>Entry Fee: ₹100 (Indians) / ₹650 (Foreigners)</li>
+                    <li>Jeep Safari: Approx ₹3,500 - ₹4,500 per jeep</li>
+                    <li>Elephant Safari: Approx ₹900 per person</li>
+                    <li>Visit Hours: 6:00 AM to 6:00 PM</li>
+                    <li>Location: Kaziranga National Park, Assam, India</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Atulya Rangmanch | Kaziranga Module | 2026</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
