@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atulya Rangmanch | India's UNESCO Marvels</title>
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- 1. GLOBAL & THEME --- */
+        :root {
+            --primary: #f39c12;    /* Saffron Gold */
+            --bg-dark: #050505;    /* Rich Black */
+            --bg-light: #fdfcf0;   /* Cream Paper */
+            --text-dark: #1a1a1a;
+            --accent: #d35400;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        ::selection { background: var(--primary); color: white; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* --- 2. HEADER --- */
+        header {
+            position: fixed;
+            top: 0; width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--primary); }
+
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin-left: 30px; }
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        nav ul li a:hover { color: var(--primary); }
+
+        /* --- 3. HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=1600') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h4 { letter-spacing: 10px; font-weight: 300; margin-bottom: 15px; font-size: 0.8rem; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 6rem; line-height: 1; margin-bottom: 20px; }
+        .hero p { max-width: 700px; font-weight: 300; margin-bottom: 40px; color: rgba(255,255,255,0.7); font-size: 1.1rem; }
+
+        .btn-main {
+            padding: 18px 45px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.4s;
+            border: 2px solid var(--primary);
+            letter-spacing: 2px;
+        }
+        .btn-main:hover { background: transparent; transform: scale(1.05); }
+
+        /* --- 4. ABOUT SECTION --- */
+        #about { padding: 150px 10%; background: white; text-align: center; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 30px; }
+        .section-title span { color: var(--primary); font-style: italic; }
+        .about-text p { max-width: 850px; margin: 0 auto 30px; font-size: 1.15rem; color: #444; }
+
+        /* --- 5. CINEMATIC SLIDER --- */
+        #services { padding: 100px 0; background: var(--bg-dark); color: white; text-align: center; }
+        .slider-container { position: relative; width: 100%; height: 600px; display: flex; justify-content: center; align-items: center; perspective: 1500px; }
+        .slider { position: relative; width: 380px; height: 500px; transform-style: preserve-3d; }
+
+        .item {
+            position: absolute; width: 100%; height: 100%;
+            border-radius: 10px; overflow: hidden;
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .item img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); transition: 1s; }
+        .item:hover img { filter: brightness(0.9); transform: scale(1.05); }
+
+        .item-info {
+            position: absolute; bottom: 0; width: 100%; padding: 40px 25px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+            text-align: left; opacity: 0; transition: 0.5s;
+        }
+        .item-info h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 5px; color:white }
+        .item-info p { color: white; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Slider States */
+        .item.active { transform: translateZ(250px); z-index: 10; filter: brightness(1.2); }
+        .item.active .item-info { opacity: 1; }
+        .item.prev { transform: translateX(-400px) rotateY(40deg) scale(0.8); z-index: 5; opacity: 0.4; }
+        .item.next { transform: translateX(400px) rotateY(-40deg) scale(0.8); z-index: 5; opacity: 0.4; }
+
+        .nav-btn {
+            position: absolute; top: 50%; width: 60px; height: 60px;
+            border-radius: 50%; border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05); color: white; cursor: pointer;
+            z-index: 100; transition: 0.3s; font-size: 1.5rem;
+        }
+        .nav-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        #prev { left: 12%; } #next { right: 12%; }
+
+        /* --- 6. FORMS --- */
+        .form-section { padding: 120px 10%; display: flex; justify-content: center; background: var(--bg-light); }
+        .form-container {
+            background: white; padding: 60px; border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05); width: 100%; max-width: 500px;
+        }
+        .form-container h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 30px; text-align: center; }
+        input, textarea {
+            width: 100%; padding: 15px; margin-bottom: 20px; border: 1px solid #eee;
+            border-radius: 10px; background: #fafafa; font-family: 'Poppins', sans-serif;
+        }
+        .btn-form {
+            width: 100%; padding: 15px; background: var(--bg-dark); color: white;
+            border: none; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.3s;
+        }
+        .btn-form:hover { background: var(--primary); }
+
+        /* --- 7. ANIMATIONS --- */
+        .reveal { opacity: 0; transform: translateY(50px); transition: 1.2s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        footer { padding: 80px; text-align: center; background: var(--bg-dark); color: rgba(255,255,255,0.3); letter-spacing: 2px; }
+        /* --- CINEMATIC SERVICES SECTION --- */
+#services {
+    position: relative;
+    padding: 150px 0;
+    /* High-res heritage background (Hampi or Ajanta style) */
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('https://i.pinimg.com/736x/77/15/da/7715daba2e48f9de7701e93617faa821.jpg') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed; /* This creates the "Seamless" Parallax effect */
+    color: white;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Add a soft fade transition from the white "About" section */
+#services::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 150px;
+    background: linear-gradient(to bottom, white, transparent);
+    z-index: 1;
+}
+
+.slider-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1500px;
+    z-index: 2; /* Keeps slider above the top fade */
+}
+
+/* Make the title glow slightly for a cinematic feel */
+#services .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    color: white;
+    text-shadow: 0 0 20px rgba(243, 156, 18, 0.4);
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+}
+
+#services .section-title span {
+    color: var(--primary);
+}
+
+/* Glassmorphism for the slider cards to make them pop against the photo */
+.item {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+/* Active link highlighting */
+nav ul li a:active, nav ul li a:focus {
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+}
+
+/* Smooth hover for the entire page */
+.btn-main, .nav-btn, .btn-form {
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-main:active {
+    transform: scale(0.95); /* Slight "click" feel */
+}
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#home" class="logo">अतुल्य |<span>| रंगमंच</span></a>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Heritage</a></li>
+                <li><a href="#login">Login</a></li>
+                <li><a href="#register">Register</a></li>
+                <li><a href="#feedback">Feedback</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <h4>ETERNAL . MAJESTIC . TIMELESS</h4>
+        <h1 class="reveal">Atulya Rangmanch</h1>
+        <p class="reveal">Embark on a cinematic voyage through India’s UNESCO World Heritage sites, where every stone whispers a legend of five thousand years.</p>
+        <a href="#about" class="btn-main reveal">START JOURNEY</a>
+    </section>
+
+    <section id="about">
+        <div class="reveal">
+            <a href="start.html"></a>
+            <h2 class="section-title">The Legacy of <span>Bharat</span></h2>
+            <div class="about-text">
+                <p>From the carved silences of Hampi to the sun-drenched chariot of Konark, India holds 42 treasures recognized by the world. From the majestic Sundarbns to the glorious Hill Forts of Rajasthan,
+                     <strong>Atulya Rangmanch</strong> is your digital portal to these architectural marvels.</p>
+                <p>We invite you to witness the craftsmanship of empires and the raw beauty of our natural landscapes, presented in an immersive cinematic experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+    <h2 class="reveal section-title" style="color: white;">
+        Iconic <span>Landmarks</span>
+    </h2>
+    
+    <div class="slider-container reveal">
+        <div class="slider">
+
+            <!-- 1. Kaziranga -->
+            <div class="item active">
+                <a href="kaziranga.html">
+                    <img src="https://rhinos.org/wp-content/uploads/2024/07/1720542345016.jpeg" alt="">
+                    <div class="item-info">
+                        <h3>Kaziranga National Park</h3>
+                        <p>Assam</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 2. Jaipur -->
+            <div class="item">
+                <a href="jaipur.html">
+                    <img src="https://static.vecteezy.com/system/resources/previews/011/084/232/large_2x/full-picture-of-hawa-mahal-of-rajasthan-photo.jpg" alt="">
+                    <div class="item-info">
+                        <h3>Jaipur City</h3>
+                        <p>Rajasthan</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 3. Konark -->
+            <div class="item">
+                <a href="suntemple.html">
+                    <img src="https://www.tripvaani.com/wp-content/uploads/2020/05/Konark-Sun-Temple-or-Black-Pagoda-The-Chariot-of-Sun.jpg" alt="">
+                    <div class="item-info">
+                        <h3>Sun Temple</h3>
+                        <p>Odisha</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 4. Sundarbans -->
+            <div class="item">
+                <a href="sundarbans.html">
+                    <img src="https://i.pinimg.com/1200x/f5/84/f9/f584f992502b4b2ffd187c02a6cfedac.jpg" alt="">
+                    <div class="item-info">
+                        <h3>Sundarbans</h3>
+                        <p>West Bengal</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 5. Hampi -->
+            <div class="item">
+                <a href="hampi.html">
+                    <img src="https://i.pinimg.com/736x/27/72/58/2772584e328628c59dc4dca1aaf946b4.jpg" alt="">
+                    <div class="item-info">
+                        <h3>Hampi City</h3>
+                        <p>Karnataka</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 6. Chola -->
+            <div class="item">
+                <a href="chola.html">
+                    <img src="https://i.pinimg.com/1200x/2f/ac/e8/2face870b303519afe9932e718694ab9.jpg" alt="">
+                    <div class="item-info">
+                        <h3>Chola Temples</h3>
+                        <p>Tamil Nadu</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 7. Ajanta -->
+            <div class="item">
+                <a href="forts.html">
+                    <img src="https://i.pinimg.com/736x/63/2c/d6/632cd6e3d4803c340b0da07d04111871.jpg" alt="">
+                    <div class="item-info">
+                        <h3>Hill Forts</h3>
+                        <p>Rajasthan</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 9. Goa -->
+            <div class="item">
+                <a href="goa.html">
+                    <img src="https://i.pinimg.com/1200x/a4/b8/c8/a4b8c83f8a2cd8713ab6826051534afd.jpg" alt="">
+                    <div class="item-info">
+                        <h3>Convents & Churches</h3>
+                        <p>Goa</p>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Navigation Buttons -->
+        <button id="prev" class="nav-btn">&larr;</button>
+        <button id="next" class="nav-btn">&rarr;</button>
+
+    </div>
+</section>
+
+    <!-- Login -->
+    <section id="login" class="form-section">
+        <div class="form-container reveal">
+            <h2>Traveler Login</h2>
+            <form id="loginForm">
+                <input type="text" id="logUser" placeholder="Username" required>
+                <input type="password" id="logPass" placeholder="Password (Min 6 chars)" required>
+                <button type="submit" class="btn-form">LOGIN</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Register -->
+    <section id="register" class="form-section" style="background: white;">
+        <div class="form-container reveal">
+            <h2>Join the Trail</h2>
+            <form id="regForm">
+                <input type="text" id="regName" placeholder="Full Name" required>
+                <input type="email" id="regEmail" placeholder="Email Address" required>
+                <input type="password" id="regPass" placeholder="Password" required>
+                <input type="password" id="regConfirm" placeholder="Confirm Password" required>
+                <button type="submit" class="btn-form">SIGN UP</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Feedback -->
+    <section id="feedback" class="form-section">
+        <div class="form-container reveal">
+            <h2>Your Experience</h2>
+            <form id="feedForm">
+                <input type="text" id="feedName" placeholder="Your Name" required>
+                <input type="email" id="feedEmail" placeholder="Email" required>
+                <textarea id="feedMsg" placeholder="Share your journey thoughts..." rows="4" required></textarea>
+                <button type="submit" class="btn-form">SUBMIT FEEDBACK</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 ATULYA RANGMANCH | THE HERITAGE EXPEDITION</p>
+    </footer>
+
+    <script>
+       /* 1. SEAMLESS SCROLL REVEAL */
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* 2. 3D SLIDER LOGIC */
+let items = document.querySelectorAll('.item');
+let current = 0;
+
+function updateSlider() {
+    items.forEach((item, index) => {
+        item.classList.remove('active', 'prev', 'next');
+        item.style.display = "none";
+        if (index === current) {
+            item.classList.add('active'); 
+            item.style.display = "block";
+        } else if (index === (current - 1 + items.length) % items.length) {
+            item.classList.add('prev'); 
+            item.style.display = "block";
+        } else if (index === (current + 1) % items.length) {
+            item.classList.add('next'); 
+            item.style.display = "block";
+        }
+    });
+}
+
+document.getElementById('next').onclick = () => { current = (current + 1) % items.length; updateSlider(); };
+document.getElementById('prev').onclick = () => { current = (current - 1 + items.length) % items.length; updateSlider(); };
+updateSlider();
+
+/* 3. BLUEPRINT VALIDATIONS (MANDATORY) */
+
+// LOGIN VALIDATION
+document.getElementById('loginForm').onsubmit = function(e) {
+    e.preventDefault();
+    const user = document.getElementById('logUser').value.trim();
+    const pass = document.getElementById('logPass').value.trim();
+
+    if (user === "" || pass === "") {
+        alert("Blueprint Error: Fields cannot be empty!");
+    } else if (pass.length < 6) {
+        alert("Blueprint Error: Password must be at least 6 characters!");
+    } else {
+        alert("Login Successful! Welcome back, " + user);
+    }
+};
+
+// REGISTER VALIDATION
+document.getElementById('regForm').onsubmit = function(e) {
+    e.preventDefault();
+    const email = document.getElementById('regEmail').value.trim();
+    const p1 = document.getElementById('regPass').value;
+    const p2 = document.getElementById('regConfirm').value;
+    const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    if (!email.match(emailPattern)) {
+        alert("Blueprint Error: Please enter a valid email format!");
+    } else if (p1 !== p2) {
+        alert("Blueprint Error: Password and Confirm Password do not match!");
+    } else {
+        alert("Registration Successful! Welcome to the Trail.");
+    }
+};
+
+// FEEDBACK VALIDATION
+document.getElementById('feedForm').onsubmit = function(e) {
+    e.preventDefault();
+    const name = document.getElementById('feedName').value.trim();
+    if (name === "") {
+        alert("Please enter your name!");
+    } else {
+        alert("Success! Thank you " + name + ", your feedback has been received.");
+        this.reset(); // Clears the form after success
+    }
+};
+    </script>
+</body>
+</html>
